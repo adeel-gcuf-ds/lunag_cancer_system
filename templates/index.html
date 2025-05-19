@@ -1,0 +1,223 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="landing-page">
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1>LungScan AI</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    {% if current_user.is_authenticated %}
+                    <li><a href="{{ url_for('dashboard') }}" class="btn btn-primary">Dashboard</a></li>
+                    <li><a href="{{ url_for('logout') }}" class="btn btn-outline-primary">Logout</a></li>
+                    {% else %}
+                    <li><a href="{{ url_for('login') }}" class="btn btn-outline-primary">Login</a></li>
+                    <li><a href="{{ url_for('signup') }}" class="btn btn-primary">Sign Up</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="{{ url_for('static', filename='images/healthcare1.jpg') }}" class="d-block w-100" alt="Healthcare Image 1">
+                    <div class="carousel-caption">
+                        <h2>Advanced Lung Cancer Detection</h2>
+                        <p>Using cutting-edge AI to analyze CT scan images</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="{{ url_for('static', filename='images/healthcare2.jpg') }}" class="d-block w-100" alt="Healthcare Image 2">
+                    <div class="carousel-caption">
+                        <h2>Early Detection Saves Lives</h2>
+                        <p>Our technology helps identify cancer at earlier stages</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="{{ url_for('static', filename='images/healthcare3.jpg') }}" class="d-block w-100" alt="Healthcare Image 3">
+                    <div class="carousel-caption">
+                        <h2>Precise Classification</h2>
+                        <p>Accurately identifies different types of lung cancer</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="{{ url_for('static', filename='images/healthcare4.jpg') }}" class="d-block w-100" alt="Healthcare Image 4">
+                    <div class="carousel-caption">
+                        <h2>Supporting Medical Professionals</h2>
+                        <p>A tool to assist doctors in diagnosis</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="{{ url_for('static', filename='images/healthcare5.jpg') }}" class="d-block w-100" alt="Healthcare Image 5">
+                    <div class="carousel-caption">
+                        <h2>Accessible Healthcare Technology</h2>
+                        <p>Making advanced diagnostics more accessible</p>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>About LungScan AI</h2>
+                    <p>LungScan AI is an advanced lung cancer detection system that uses deep learning to analyze CT scan images and identify different types of lung cancer with high accuracy.</p>
+                    <p>Our system can detect three types of lung cancer:</p>
+                    <ul>
+                        <li><strong>Lung Squamous Cell Carcinoma (SCC)</strong> - A type of non-small cell lung cancer</li>
+                        <li><strong>Lung Adenocarcinoma (ACA)</strong> - The most common type of lung cancer</li>
+                        <li><strong>Normal Lung Tissue (N)</strong> - For comparison with healthy tissue</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <div class="about-image">
+                        <img src="{{ url_for('static', filename='images/about.jpg') }}" alt="About LungScan AI">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="features">
+        <div class="container">
+            <h2>Key Features</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="{{ url_for('static', filename='images/icon-accuracy.png') }}" alt="Accuracy Icon">
+                        </div>
+                        <h3>High Accuracy</h3>
+                        <p>Our model achieves over 90% accuracy in detecting and classifying lung cancer types.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="{{ url_for('static', filename='images/icon-speed.png') }}" alt="Speed Icon">
+                        </div>
+                        <h3>Fast Results</h3>
+                        <p>Get prediction results in seconds, helping medical professionals make quicker decisions.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="{{ url_for('static', filename='images/icon-user.png') }}" alt="User-Friendly Icon">
+                        </div>
+                        <h3>User-Friendly</h3>
+                        <p>Simple interface that allows anyone to upload CT scans and get instant analysis.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="container">
+            <h2>Ready to try our lung cancer detection system?</h2>
+            <p>Upload your CT scan images and get instant predictions.</p>
+            <a href="{{ url_for('dashboard') }}" class="btn btn-primary btn-lg">Let's Start</a>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Contact Us</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <form>
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Message</label>
+                            <textarea class="form-control" id="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+                <div class="col-md-6">
+                    <div class="contact-info">
+                        <h3>Get in Touch</h3>
+                        <p>Have questions about our lung cancer detection system? Contact us for more information.</p>
+                        <div class="info-item">
+                            <strong>Name:</strong> Sara Mujahid
+                        </div>
+                        <div class="info-item">
+                            <strong>Email:</strong> saramujahid54@gmail.com
+                        </div>
+                        <div class="info-item">
+                            <strong>Phone:</strong> 03133027141
+                        </div>
+                        
+                        <div class="info-item">
+                            <strong>Address:</strong> Center of data scince GCUF
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>LungScan AI</h3>
+                    <p>Advanced lung cancer detection using artificial intelligence.</p>
+                </div>
+                <div class="col-md-3">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 LungScan AI. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</div>
+{% endblock %}

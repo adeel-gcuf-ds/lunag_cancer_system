@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="dashboard-page">
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('index') }}">LungScan AI</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('dashboard') }}">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ url_for('history') }}">History</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Help</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    {% if current_user.is_authenticated %}
+                    <li class="nav-item">
+                        <span class="nav-link">Welcome, {{ current_user.username }}</span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('signup') }}">Sign Up</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container dashboard-container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="dashboard-header">
+                    <h1>Prediction History</h1>
+                    <p>View your past CT scan predictions.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="history-section">
+                    {% if predictions %}
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Image</th>
+                                    <th>Prediction</th>
+                                    <th>Confidence</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for prediction in predictions %}
+                                <tr>
+                                    <td>{{ prediction.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                                    <td>
+                                        <img src="{{ url_for('static', filename=prediction.image_path) }}" alt="CT Scan" class="history-thumbnail">
+                                    </td>
+                                    <td>
+                                        {% if prediction.prediction_result == 'lung_scc' %}
+                                        <span class="badge bg-danger">Lung SCC</span>
+                                        {% elif prediction.prediction_result == 'lung_aca' %}
+                                        <span class="badge bg-warning">Lung ACA</span>
+                                        {% elif prediction.prediction_result == 'lung_n' %}
+                                        <span class="badge bg-success">Normal</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ (prediction.confidence * 100)|round(1) }}%</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="no-history">
+                        <p>You haven't made any predictions yet.</p>
+                        <a href="{{ url_for('dashboard') }}" class="btn btn-primary">Make a Prediction</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block extra_css %}
+<style>
+    .history-section {
+        background-color: white;
+        border-radius: 8px;
+        padding: 2rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .history-thumbnail {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 4px;
+    }
+    
+    .no-history {
+        text-align: center;
+        padding: 3rem;
+    }
+    
+    .no-history p {
+        font-size: 1.2rem;
+        color: #6c757d;
+        margin-bottom: 1.5rem;
+    }
+</style>
+{% endblock %}
+{% endblock %}

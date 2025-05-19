@@ -1,0 +1,259 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="dashboard-page">
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('index') }}">LungScan AI</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ url_for('dashboard') }}">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('history') }}">History</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Help</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    {% if current_user.is_authenticated %}
+                    <li class="nav-item">
+                        <span class="nav-link">Welcome, {{ current_user.username }}</span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('signup') }}">Sign Up</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container dashboard-container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="dashboard-header">
+                    <h1>Lung Cancer Detection Dashboard</h1>
+                    <p>Upload a CT scan image to detect the type of lung cancer.</p>
+                    <div id="model-status-alert" class="alert alert-warning" style="display: none;">
+                        Model is not loaded. Predictions will not work. Please contact the administrator.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="upload-section">
+                    <h2>Upload CT Scan Image</h2>
+                    <form id="upload-form" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="file" class="form-label">Select CT Scan Image</label>
+                            <input class="form-control" type="file" id="file" name="file" accept="image/*">
+                        </div>
+                        <div class="preview-container mb-3">
+                            <img id="image-preview" src="#" alt="Image Preview" style="display: none; max-width: 100%;">
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="predict-btn">Predict</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="result-section">
+                    <h2>Prediction Result</h2>
+                    <div id="result-container">
+                        <div class="result-placeholder">
+                            <p>Upload an image and click "Predict" to see the results.</p>
+                        </div>
+                        <div id="result-content" style="display: none;">
+                            <div class="result-header">
+                                <h3>Detected Cancer Type: <span id="cancer-type"></span></h3>
+                                <p>Confidence: <span id="confidence"></span>%</p>
+                            </div>
+                            <div class="result-details">
+                                <div class="cancer-info" id="lung-scc-info" style="display: none;">
+                                    <h4>Lung Squamous Cell Carcinoma (SCC)</h4>
+                                    <p>Squamous cell carcinoma is a type of non-small cell lung cancer that usually starts in the bronchi. It tends to be found in the center of the lungs.</p>
+                                    <ul>
+                                        <li>Common in smokers</li>
+                                        <li>Accounts for about 25-30% of all lung cancers</li>
+                                        <li>Often responds well to treatment</li>
+                                    </ul>
+                                </div>
+                                <div class="cancer-info" id="lung-aca-info" style="display: none;">
+                                    <h4>Lung Adenocarcinoma (ACA)</h4>
+                                    <p>Adenocarcinoma is the most common type of lung cancer. It starts in the cells that would normally secrete substances such as mucus.</p>
+                                    <ul>
+                                        <li>More common in non-smokers, women, and younger people</li>
+                                        <li>Often found in the outer regions of the lungs</li>
+                                        <li>May have certain genetic mutations that can be targeted with specific therapies</li>
+                                    </ul>
+                                </div>
+                                <div class="cancer-info" id="lung-n-info" style="display: none;">
+                                    <h4>Normal Lung Tissue (N)</h4>
+                                    <p>No cancer detected. The CT scan shows normal lung tissue without signs of malignancy.</p>
+                                    <ul>
+                                        <li>Regular follow-ups are still recommended</li>
+                                        <li>Maintain a healthy lifestyle to reduce cancer risk</li>
+                                        <li>Report any new symptoms to your healthcare provider</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Modal -->
+    <div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="authModalLabel">Authentication Required</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Please sign in or create an account to use the prediction feature.</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="{{ url_for('login') }}" class="btn btn-primary">Sign In</a>
+                    <a href="{{ url_for('signup') }}" class="btn btn-secondary">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Error Modal -->
+    <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="error-message">An error occurred.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block extra_js %}
+<script>
+    $(document).ready(function() {
+        // Check if model is loaded
+        $.get('/model_status', function(data) {
+            if (!data.model_loaded) {
+                $('#model-status-alert').show();
+                $('#predict-btn').prop('disabled', true);
+            }
+        });
+        
+        // Image preview
+        $('#file').change(function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#image-preview').attr('src', e.target.result).show();
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Form submission
+        $('#upload-form').submit(function(e) {
+            e.preventDefault();
+            
+            // Check if user is authenticated
+            $.get('/check_auth', function(data) {
+                if (data.authenticated) {
+                    // User is authenticated, proceed with upload
+                    uploadAndPredict();
+                } else {
+                    // User is not authenticated, show modal
+                    $('#authModal').modal('show');
+                }
+            });
+        });
+
+        function uploadAndPredict() {
+            const formData = new FormData($('#upload-form')[0]);
+            
+            $.ajax({
+                url: '/predict',
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                beforeSend: function() {
+                    $('#predict-btn').prop('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processing...');
+                },
+                success: function(data) {
+                    if (data.success) {
+                        // Show result
+                        $('#result-content').show();
+                        $('.result-placeholder').hide();
+                        
+                        // Format the prediction result for display
+                        let displayClass = data.prediction;
+                        if (data.prediction === 'lung_scc') {
+                            displayClass = 'Lung Squamous Cell Carcinoma (SCC)';
+                        } else if (data.prediction === 'lung_aca') {
+                            displayClass = 'Lung Adenocarcinoma (ACA)';
+                        } else if (data.prediction === 'lung_n') {
+                            displayClass = 'Normal Lung Tissue (N)';
+                        }
+                        
+                        // Update result content
+                        $('#cancer-type').text(displayClass);
+                        $('#confidence').text((data.confidence * 100).toFixed(1));
+                        
+                        // Show appropriate cancer info
+                        $('.cancer-info').hide();
+                        if (data.prediction === 'lung_scc') {
+                            $('#lung-scc-info').show();
+                        } else if (data.prediction === 'lung_aca') {
+                            $('#lung-aca-info').show();
+                        } else if (data.prediction === 'lung_n') {
+                            $('#lung-n-info').show();
+                        }
+                    } else {
+                        $('#error-message').text(data.error || 'An error occurred during prediction.');
+                        $('#errorModal').modal('show');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    $('#error-message').text('Server error: ' + error);
+                    $('#errorModal').modal('show');
+                },
+                complete: function() {
+                    $('#predict-btn').prop('disabled', false).text('Predict');
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}
+{% endblock %}

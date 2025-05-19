@@ -1,0 +1,457 @@
+/* Global Styles */
+:root {
+    --primary-color: #3498db;
+    --secondary-color: #2ecc71;
+    --accent-color: #e74c3c;
+    --dark-color: #2c3e50;
+    --light-color: #ecf0f1;
+    --text-color: #333;
+    --light-text: #f8f9fa;
+    --border-radius: 8px;
+    --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: #f5f8fa;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    color: #217dbb;
+}
+
+.btn {
+    border-radius: var(--border-radius);
+    padding: 0.5rem 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: #217dbb;
+    border-color: #217dbb;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+section {
+    padding: 5rem 0;
+}
+
+/* Landing Page Styles */
+.landing-page .header {
+    background-color: white;
+    box-shadow: var(--box-shadow);
+    padding: 1rem 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.landing-page .header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.landing-page .logo h1 {
+    margin: 0;
+    color: var(--primary-color);
+    font-size: 1.8rem;
+}
+
+.landing-page nav ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+}
+
+.landing-page nav ul li {
+    margin-left: 1.5rem;
+}
+
+.landing-page nav ul li a {
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.landing-page nav ul li a:hover {
+    color: var(--primary-color);
+}
+
+.landing-page .hero {
+    margin-top: 70px;
+    position: relative;
+}
+
+.landing-page .carousel-item {
+    height: 600px;
+}
+
+.landing-page .carousel-item img {
+    object-fit: cover;
+    height: 100%;
+    filter: brightness(0.7);
+}
+
+.landing-page .carousel-caption {
+    bottom: 50%;
+    transform: translateY(50%);
+    padding: 2rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: var(--border-radius);
+}
+
+.landing-page .carousel-caption h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.landing-page .carousel-caption p {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+}
+
+.landing-page .about {
+    background-color: white;
+}
+
+.landing-page .about h2 {
+    color: var(--dark-color);
+    margin-bottom: 2rem;
+}
+
+.landing-page .about-image img {
+    width: 100%;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+.landing-page .features {
+    background-color: #f8f9fa;
+}
+
+.landing-page .features h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: var(--dark-color);
+}
+
+.landing-page .feature-card {
+    background-color: white;
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    text-align: center;
+    box-shadow: var(--box-shadow);
+    height: 100%;
+    transition: transform 0.3s ease;
+}
+
+.landing-page .feature-card:hover {
+    transform: translateY(-10px);
+}
+
+.landing-page .feature-icon {
+    margin-bottom: 1.5rem;
+}
+
+.landing-page .feature-icon img {
+    width: 80px;
+    height: 80px;
+}
+
+.landing-page .feature-card h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.landing-page .cta {
+    background-color: var(--primary-color);
+    color: white;
+    text-align: center;
+}
+
+.landing-page .cta h2 {
+    margin-bottom: 1rem;
+}
+
+.landing-page .cta p {
+    margin-bottom: 2rem;
+    font-size: 1.2rem;
+}
+
+.landing-page .cta .btn-primary {
+    background-color: white;
+    color: var(--primary-color);
+    border: none;
+    font-size: 1.2rem;
+    padding: 0.75rem 2rem;
+}
+
+.landing-page .cta .btn-primary:hover {
+    background-color: var(--light-color);
+}
+
+.landing-page .contact {
+    background-color: white;
+}
+
+.landing-page .contact h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: var(--dark-color);
+}
+
+.landing-page .contact-info {
+    padding: 2rem;
+    background-color: #f8f9fa;
+    border-radius: var(--border-radius);
+    height: 100%;
+}
+
+.landing-page .contact-info h3 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+}
+
+.landing-page .info-item {
+    margin-bottom: 1rem;
+}
+
+.landing-page .footer {
+    background-color: var(--dark-color);
+    color: white;
+    padding: 3rem 0 1rem;
+}
+
+.landing-page .footer h3, .landing-page .footer h4 {
+    color: var(--light-color);
+}
+
+.landing-page .footer ul {
+    list-style: none;
+    padding: 0;
+}
+
+.landing-page .footer ul li {
+    margin-bottom: 0.5rem;
+}
+
+.landing-page .footer ul li a {
+    color: #bdc3c7;
+}
+
+.landing-page .footer ul li a:hover {
+    color: white;
+}
+
+.landing-page .copyright {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    font-size: 0.9rem;
+    color: #bdc3c7;
+}
+
+/* Dashboard Styles */
+.dashboard-page .navbar {
+    background-color: var(--dark-color);
+}
+
+.dashboard-page .navbar-brand {
+    color: white;
+    font-weight: 600;
+}
+
+.dashboard-container {
+    margin-top: 2rem;
+    padding-bottom: 3rem;
+}
+
+.dashboard-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 2rem;
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+.dashboard-header h1 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.upload-section, .result-section {
+    background-color: white;
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    box-shadow: var(--box-shadow);
+    height: 100%;
+    min-height: 500px;
+}
+
+.upload-section h2, .result-section h2 {
+    color: var(--dark-color);
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.preview-container {
+    text-align: center;
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: var(--border-radius);
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.result-placeholder {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #6c757d;
+}
+
+.result-header {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background-color: #f8f9fa;
+    border-radius: var(--border-radius);
+    text-align: center;
+}
+
+.result-header h3 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.cancer-info {
+    padding: 1.5rem;
+    background-color: #f8f9fa;
+    border-radius: var(--border-radius);
+    margin-bottom: 1rem;
+}
+
+.cancer-info h4 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+#lung-scc-info {
+    border-left: 4px solid var(--accent-color);
+}
+
+#lung-aca-info {
+    border-left: 4px solid var(--secondary-color);
+}
+
+#lung-n-info {
+    border-left: 4px solid #3498db;
+}
+
+/* Auth Pages */
+.auth-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f5f8fa;
+    padding: 2rem 0;
+}
+
+.auth-card {
+    background-color: white;
+    border-radius: var(--border-radius);
+    padding: 2.5rem;
+    box-shadow: var(--box-shadow);
+    width: 100%;
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.auth-header h2 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #eee;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .landing-page .carousel-item {
+        height: 400px;
+    }
+    
+    .landing-page .carousel-caption h2 {
+        font-size: 1.8rem;
+    }
+    
+    .landing-page .carousel-caption p {
+        font-size: 1rem;
+    }
+    
+    section {
+        padding: 3rem 0;
+    }
+    
+    .upload-section, .result-section {
+        margin-bottom: 2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .landing-page .carousel-item {
+        height: 300px;
+    }
+    
+    .landing-page .carousel-caption {
+        padding: 1rem;
+    }
+    
+    .landing-page .carousel-caption h2 {
+        font-size: 1.5rem;
+    }
+    
+    .auth-card {
+        padding: 1.5rem;
+    }
+}
